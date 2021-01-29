@@ -53,7 +53,8 @@ app.use('/files', filemanagerMiddleware(config));
 app.get("*", (req, res) => {
     res.sendFile('index.html', { root });
 });
-
-app.listen(8000, () => {
-    console.log('Servidor iniciado en puerto 8000');
+const PORT = 8000;
+app.listen(process.env.PORT || 8000, () => {
+    console.log(`Servidor iniciado en puerto ${PORT}`);
 });
+
