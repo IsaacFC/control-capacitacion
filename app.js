@@ -1,10 +1,8 @@
 const express = require('express');
 const path = require('path');
-const http = require('http');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 var bodyParser = require('body-parser');
-const pageFiles = require('./controllers/pageController/pageFiles');
 const filemanagerMiddleware = require('@opuscapita/filemanager-server').middleware;
 
 // Para iniciar servidor
@@ -43,8 +41,6 @@ const config = {
     fsRoot: path.resolve(__dirname, './controllers/authController/Documentos'),
     rootName: 'Principal',
     readOnly: false,
-
-
   };
 
 app.use('/files', filemanagerMiddleware(config));

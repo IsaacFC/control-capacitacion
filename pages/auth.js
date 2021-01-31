@@ -47,7 +47,7 @@ router.put("/modify-courses", authCourses.modifyCourse);
 
 router.delete("/delete-course/:tagId", authCourses.deleteCourse);
 
-router.get("/courses-list-file", authDoc.fileCoursesList);
+router.get("/courses-filename", authDoc.fileCoursesList);
 
 router.get("/courses-download", authDoc.downloadCourses);
 
@@ -79,9 +79,9 @@ router.put("/attendance-instructor/set-attendance/:grupo/:fecha/:rfc", authInstr
 
 router.put("/grades-list/:grupo/:rfc", authInstructorCourses.setGrades);
 
-router.get("/instructor-download-attendance/:group", authDoc.downloadAttendanceList);
-
 router.get("/instructorcourses-filename/:group", authDoc.sendFileName);
+
+router.get("/instructorcourses-download/:group", authDoc.downloadAttendanceList);
 
 
 module.exports = router;

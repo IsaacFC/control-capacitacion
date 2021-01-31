@@ -102,7 +102,8 @@ exports.getEnrollmentForm = async (req, res) => {
                                 message: 'No es posible inscribirse. El curso se está llevando a cabo o ha finalizado.'
                             });
                         };
-
+                        console.log(results[0].genero)
+                        console.log(results[0].departamento_usuario)
                         if (numeroInscritos < results[0].limite_participantes) {
                             const data = {
                                 name: results[0].nombre_usuario,

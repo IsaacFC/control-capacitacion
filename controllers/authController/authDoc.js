@@ -259,16 +259,30 @@ exports.fillEvaluacionDocente = async (req, res) => {
 
 
 exports.downloadAttendanceList = async (req, res) => {
-
     try {
-
+        const group = req.params.group;
+        //var pathCedula = __dirname + '/Documentos/cursos/CEDULA DE INSCRIPCION- ' + decoded.id + ' - ' + group + '.docx'
+        fechaActual = new Date();
+        console.log('DESCARGAR: ');
+        console.log(group)
+        var files = searchRecursive(__dirname + '/Documentos/asistencia', 'LISTA DE ASISTENCIA- ' + group + '.docx');
+        console.log(files[0]);
+        return res.download(files[0], function (err) {
+            if (err) {
+                // if the file download fails, we throw an error
+                console.log(err);
+                res.status(400).send({
+                    message: 'Error al descargar cedula de inscripción'
+                });
+            };
+        });
     } catch (error) {
-        console.log('SERVIDOR: ' + error);
+        console.log(error);
         return res.status(500).send({
-            message: error
+            message: 'Error con el servidor al descargar cedula'
         });
     }
-}
+};
 exports.sendFileName = (req, res) => {
     try {
 
@@ -700,14 +714,6 @@ exports.sendFileName = (req, res) => {
 
                 });
                 
-// SELECT cedula_inscripcion.rfc, lista_asistencia.fecha_asistencia FROM cedula_inscripcion
-// INNER JOIN curso ON curso.grupo = cedula_inscripcion.grupo  
-// INNER JOIN usuario ON usuario.rfc = cedula_inscripcion.rfc
-// INNER JOIN lista_asistencia ON lista_asistencia.rfc = cedula_inscripcion.rfc
-// WHERE cedula_inscripcion.grupo = 'PRUEBA' 
-// ORDER BY usuario.apellido_paterno
-
-
                 let objectValues = Object.assign({}, ...arr);
 
                 var myJSON = JSON.stringify(objectValues);
@@ -743,13 +749,8 @@ exports.sendFileName = (req, res) => {
 
                 var pathListaCursos = path.resolve(__dirname, direccionMes + '/LISTA DE ASISTENCIA- ' + group + '.docx');
 
-                return res.download(pathListaCursos, function (err) {
-                    if (err) {
-                        // if the file download fails, we throw an error
-                        res.status(400).send({
-                            message: 'Error al descargar cedula de inscripción'
-                        });
-                    };
+                return res.status(200).send({
+                    fileName: 'LISTA DE ASISTENCIA- ' + group + '.docx'
                 });
 
 
