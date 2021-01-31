@@ -62,7 +62,6 @@ exports.getCourses = async (req, res) => {
 
                         if ((result.length - 1) == key) {
                             console.log('Cursos cargados');
-                            res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private')
                             return res.status(200).send(resArray);
                         }
                     });
