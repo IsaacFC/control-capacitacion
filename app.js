@@ -35,7 +35,7 @@ app.use(express.static(root));
 // Definir las rutas/direcciones para requests. 
 // De estos archivos se cargan o envian peticiones.
 app.use('/auth', require('./pages/auth'));
-app.use('/api', require('./pages/pages'));
+app.use('/', require('./pages/pages'));
 
 const config = {
     fsRoot: path.resolve(__dirname, './controllers/authController/Documentos'),
