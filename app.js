@@ -4,7 +4,6 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 var bodyParser = require('body-parser');
 const filemanagerMiddleware = require('@opuscapita/filemanager-server').middleware;
-const pageCourses = require('./controllers/pageController/pageCourses');
 
 // Para iniciar servidor
 const app = express();
@@ -32,9 +31,6 @@ app.use((req, res, next) => {
 
 const root = require('path').join(__dirname, './build')
 app.use(express.static(root));
-
-app.get("/courses-overview", pageCourses.getCourses);
-
 
 // Definir las rutas/direcciones para requests. 
 // De estos archivos se cargan o envian peticiones.
