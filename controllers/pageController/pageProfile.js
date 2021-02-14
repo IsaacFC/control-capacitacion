@@ -2,31 +2,35 @@ const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
 const db = require('../../db');
 
+
 exports.verifyToken = async (req, res, next) => {
     if (req.cookies.jwt) {
+        console.log('verificar');
+        let accessToken = req.cookies.jwt;
         try {
             // 1. Verificar el token
             const decoded = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET);
 
             // 2. Verificar si el usuario existe
             db.query('SELECT * FROM usuario WHERE rfc = ?', [decoded.id], (error, result) => {
-                //console.log(result);
+                // console.log(result);
                 if (!result) {
-                    return next();
-                }
-
+                    console.log('no hay resultados');
+                    return res.status(401).send();
+                };
+                console.log('hay resultados');
+                // return res.status(401).send();
                 return next();
 
             });
 
         } catch (error) {
-            console.log(error);
-            return next();
-        }
+            return res.status(401).send();
+        };
     } else {
-        next();
-    }
-}
+        return res.status(403).send();
+    };
+};
 
 // Toma los datos del usuario en sesión para desplegarlos en su pagina 
 // de configuración
@@ -44,7 +48,7 @@ exports.getProfileData = async (req, res) => {
                     return res.status(500).send({
                         message: 'Error al consultar el usuario (configuracion usuario): ' + error
                     });
-                }
+                };
 
                 const data = {
                     name: result[0].nombre_usuario,
@@ -56,9 +60,9 @@ exports.getProfileData = async (req, res) => {
                     phoneNumber: result[0].telefono,
                     plaza: result[0].plaza,
                 };
-                console.log(data);
-
-                return res.status(200).send(data);
+                console.log('COOKIES: ');
+                console.log(req.cookies.jwt)
+                return res.status(201).send(data);
 
             });
 

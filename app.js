@@ -32,6 +32,8 @@ app.use((req, res, next) => {
 const root = require('path').join(__dirname, './build')
 app.use(express.static(root));
 
+
+
 // Definir las rutas/direcciones para requests. 
 // De estos archivos se cargan o envian peticiones.
 app.use('/auth', require('./pages/auth'));

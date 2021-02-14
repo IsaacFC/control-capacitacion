@@ -17,12 +17,16 @@ var router = require('express').Router();
 ///////////////////////////////////////////////////
 //                   LOGIN                       //
 ///////////////////////////////////////////////////
-router.post("/login",  authLogin.login);
+router.post("/login", authLogin.login);
+
+router.post("/token",  authLogin.refresh);
 
 ///////////////////////////////////////////////////
 //            ADMIN: USUARIOS                    //
 ///////////////////////////////////////////////////
 router.post("/register-users",  authUsers.registerUser);
+
+//router.post("/registrarTODO",  authUsers.registrarTODO);
 
 router.put("/modify-users", authUsers.modifyUser);
 

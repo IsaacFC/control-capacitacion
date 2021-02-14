@@ -43,7 +43,7 @@ exports.getInstructorCourses = async (req, res) => {
                 return res.status(200).send(cursosInstructor);
             };
 
-            
+
 
             Object.keys(cursosInstructor).forEach(function (key) {
                 var row = cursosInstructor[key];
@@ -74,7 +74,7 @@ exports.getInstructorCourses = async (req, res) => {
                     trainingType: row.tipo_capacitacion,
                 };
                 arrCursosInstructor.push(data);
-                
+
                 if ((cursosInstructor.length - 1) == key) {
                     console.log('Cursos instructor cargados');
                     return res.status(200).send(arrCursosInstructor);
@@ -174,7 +174,7 @@ exports.getPartakersList = async (req, res) => {
         var arrUsuarios = [];
 
         console.log(group)
-
+        
         db.query('SELECT * FROM cedula_inscripcion WHERE grupo = ?', [group], (error, inscritos) => {
             if (error) {
                 return res.status(500).send({
@@ -197,7 +197,7 @@ exports.getPartakersList = async (req, res) => {
                 var rfc = arrRFC[key];
 
                 db.query('SELECT * FROM usuario WHERE rfc = ?', [rfc], (error, usuario) => {
-                    
+
                     var data = {
                         course: group,
                         name: usuario[0].nombre_usuario
@@ -206,7 +206,7 @@ exports.getPartakersList = async (req, res) => {
                         email: usuario[0].email,
                     };
                     arrUsuarios.push(data);
-                    console.log(data)
+                    console.log(arrUsuarios)
 
                     if ((arrRFC.length - 1) == key) {
                         console.log('Lista de inscritos cargada');
@@ -228,7 +228,7 @@ exports.getGroupAttendanceList = async (req, res) => {
     try {
         const group = req.params.group;
         const date = req.params.date;
-        
+
         var arrRFC = [];
         var arrUsuarios = [];
         db.query('SELECT * FROM cedula_inscripcion WHERE grupo = ?', [group], (error, inscritos) => {
@@ -259,7 +259,13 @@ exports.getGroupAttendanceList = async (req, res) => {
                     var nombreUsuario = usuario[0].nombre_usuario;
                     var apellidoPaterno = usuario[0].apellido_paterno;
                     var apellidoMaterno = usuario[0].apellido_materno;
-                    var fecha = moment(new Date(date)).format('YYYY-DD-MM');
+                    var param = date.replace(/-/g, '/');
+                    console.log(param);
+                    var fechaAsistencia = moment(param, "DD-MM-YYYY");
+                    var dateObject = fechaAsistencia.toDate();
+
+                    var fecha = moment(new Date(dateObject)).format('YYYY-MM-DD');
+                    //var fecha = moment(new Date(date)).format('YYYY-DD-MM');
 
                     db.query('SELECT * FROM lista_asistencia WHERE rfc = ? AND grupo = ? AND fecha_asistencia = ?',
                         [rfc, group, fecha.toString()], (error, asistencia) => {

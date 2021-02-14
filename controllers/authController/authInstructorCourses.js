@@ -8,20 +8,28 @@ exports.updatePartakerAttendance = async (req, res, next) => {
 
     var rfc = req.params.rfc;
     var group = req.params.grupo;
-    var fecha = moment(new Date(req.params.fecha)).format('YYYY-DD-MM');
-
     var { status } = req.body;
+
+    var param = req.params.fecha.replace(/-/g, '/');
+    console.log(param);
+    var fecha = moment(param, "DD-MM-YYYY");
+    var dateObject = fecha.toDate();
+
+    var fechaAsistencia = moment(new Date(dateObject)).format('YYYY-MM-DD');
+
     console.log(status)
+    console.log(fechaAsistencia.toString())
+    console.log(req.params.fecha)
 
     try {
         db.query('SELECT * FROM lista_asistencia WHERE rfc = ? AND grupo = ? AND fecha_asistencia = ?',
-            [rfc, group, fecha.toString()], (error, asistencia) => {
+            [rfc, group, fechaAsistencia.toString()], (error, asistencia) => {
 
                 if (status === 'P' && asistencia.length < 1) {
                     db.query('INSERT INTO lista_asistencia SET ?', {
                         rfc: rfc,
                         grupo: group,
-                        fecha_asistencia: fecha.toString()
+                        fecha_asistencia: fechaAsistencia.toString()
                     }, (error, results) => {
                         if (error) {
                             console.log(error);
@@ -32,7 +40,7 @@ exports.updatePartakerAttendance = async (req, res, next) => {
                     });
                 } else if (status === 'A' && asistencia.length > 0) {
                     db.query('DELETE FROM lista_asistencia WHERE rfc = ? AND grupo = ? AND fecha_asistencia = ?',
-                        [rfc, group, fecha.toString()], (error, results) => {
+                        [rfc, group, fechaAsistencia.toString()], (error, results) => {
                             if (error) {
                                 console.log(error);
 

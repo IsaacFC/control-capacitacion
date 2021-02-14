@@ -38,6 +38,7 @@ exports.getUsers = async (req, res) => {
                         resArray.push(data);
 
                         if ((result.length - 1) == key) {
+                            //console.log(resArray);
                             console.log('Usuarios cargados');
                             return res.status(200).send(resArray);
                         }

@@ -48,7 +48,7 @@ router.get("/enrollment-form/:tagId", pageEnrollment.getEnrollmentForm);
 //                    MIS CURSOS               //
 ///////////////////////////////////////////////////
 /* CUALQUIER USUARIO: VER CURSOS A LOS QUE ESTA INSCRITO */
-router.get("/mycourses", pageMyCourses.getMyCourses);
+router.get("/mycourses",  pageMyCourses.getMyCourses);
 
 /* CUALQUIER USUARIO: VERIFICA DATOS PARA PODER EVALUAR DOCENTE */
 router.get("/course-evaluation-form/:tagId", pageMyCourses.getCourseEvaluationInfo);

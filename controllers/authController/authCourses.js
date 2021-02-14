@@ -70,8 +70,28 @@ exports.registerCourses = (req, res, next) => {
                         });
                     };
                 };
-                console.log(periodStart)
-                console.log(periodEnd)
+                // console.log(periodStart)
+                // console.log(periodEnd)
+                const data = {
+                    nombre_curso: course,
+                    grupo: group,
+                    rfc: rfc,
+                    nombre_instructor: instructor,
+                    departamento: department,
+                    tipo_curso: courseType,
+                    tipo_capacitacion: trainingType,
+                    periodo_inicial: periodStart,
+                    periodo_final: periodEnd,
+                    hora_inicial: hourStart,
+                    hora_final: hourEnd,
+                    num_horas: hourNumber,
+                    aula: classroom,
+                    limite_participantes: partakerLimit,
+                    mostrar_curso: showCourse,
+                    dirigido_a: addressedTo,
+                    observaciones: observations,
+                };
+                console.log(data);
                 db.query('INSERT INTO curso SET ?', {
                     nombre_curso: course,
                     grupo: group,
@@ -186,8 +206,28 @@ exports.modifyCourse = async (req, res) => {
                             });
                         }
                     }
-                    console.log(periodStart)
-                    console.log(periodEnd)
+                    // console.log(periodStart)
+                    // console.log(periodEnd)
+                    const data = {
+                        nombre_curso: course,
+                        grupo: group,
+                        rfc: rfc,
+                        nombre_instructor: instructor,
+                        departamento: department,
+                        tipo_curso: courseType,
+                        tipo_capacitacion: trainingType,
+                        periodo_inicial: periodStart,
+                        periodo_final: periodEnd,
+                        hora_inicial: hourStart,
+                        hora_final: hourEnd,
+                        num_horas: hourNumber,
+                        aula: classroom,
+                        limite_participantes: partakerLimit,
+                        mostrar_curso: showCourse,
+                        dirigido_a: addressedTo,
+                        observaciones: observations,
+                    };
+                    console.log(data);
                     db.query('UPDATE curso SET nombre_curso = ?, ' +
                         'grupo = ?, ' +
                         'nombre_instructor = ?, ' +
@@ -231,7 +271,6 @@ exports.deleteCourse = async (req, res) => {
     try {
         console.log('Eliminar: ' + req.params.tagId);
         const grupo = req.params.tagId;
-
 
 
         db.query('SELECT * FROM cedula_inscripcion WHERE grupo = ?', [grupo], (error, results) => {
