@@ -51,8 +51,8 @@ app.use('/files', filemanagerMiddleware(config));
 app.get("*", (req, res) => {
     res.sendFile('index.html', { root });
 });
-const PORT = 8000;
-app.listen(process.env.PORT || 8000, () => {
+const PORT = 8080;
+app.listen(process.env.PORT || 8080, () => {
     console.log(`Servidor iniciado en puerto ${PORT}`);
 });
 
